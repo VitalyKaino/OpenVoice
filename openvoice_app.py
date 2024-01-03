@@ -245,7 +245,7 @@ with gr.Blocks(analytics_enabled=False) as demo:
             with gr.Row():
                 gr.Markdown(description)
         with gr.Column():
-            gr.Video('https://github.com/myshell-ai/OpenVoice/assets/40556743/3cba936f-82bf-476c-9e52-09f0f417bb2f', autoplay=True)
+            gr.Video('https://github.com/myshell-ai/OpenVoice/assets/40556743/3cba936f-82bf-476c-9e52-09f0f417bb2f', autoplay=False)
             
     with gr.Row():
         gr.HTML(wrapped_markdown_content)
@@ -292,7 +292,7 @@ with gr.Blocks(analytics_enabled=False) as demo:
 
         with gr.Column():
             out_text_gr = gr.Text(label="Info")
-            audio_gr = gr.Audio(label="Synthesised Audio", autoplay=True)
+            audio_gr = gr.Audio(label="Synthesised Audio", autoplay=False)
             ref_audio_gr = gr.Audio(label="Reference Audio Used")
 
             gr.Examples(examples,
