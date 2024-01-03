@@ -283,7 +283,7 @@ with gr.Blocks(analytics_enabled=False) as demo:
             )
             tos_gr = gr.Checkbox(
                 label="Agree",
-                value=False,
+                value=True,
                 info="I agree to the terms of the cc-by-nc-4.0 license-: https://github.com/myshell-ai/OpenVoice/blob/main/LICENSE",
             )
 
