@@ -113,8 +113,8 @@ def predict(prompt, style, audio_file_pth, mic_file_path, use_mic, agree):
             None,
             None,
         )
-
-    # src_path = f'{output_dir}/tmp.wav'
+        
+    src_path = f'{output_dir}/tmp.wav'
     # response = client.audio.speech.create(
     #     model="tts-1",
     #     voice="alloy",
@@ -122,7 +122,7 @@ def predict(prompt, style, audio_file_pth, mic_file_path, use_mic, agree):
     # )
 
     # response.stream_to_file(src_path)
-
+    tts_model.tts(prompt, src_path, speaker=style, language=language)
     save_path = f'{output_dir}/output.wav'
     # Run the tone color converter
     encode_message = "@MyShell"
