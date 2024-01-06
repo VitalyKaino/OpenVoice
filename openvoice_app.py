@@ -114,14 +114,14 @@ def predict(prompt, style, audio_file_pth, mic_file_path, use_mic, agree):
             None,
         )
 
-    src_path = f'{output_dir}/tmp.wav'
-    response = client.audio.speech.create(
-        model="tts-1",
-        voice="alloy",
-        input=prompt,
-    )
+    # src_path = f'{output_dir}/tmp.wav'
+    # response = client.audio.speech.create(
+    #     model="tts-1",
+    #     voice="alloy",
+    #     input=prompt,
+    # )
 
-    response.stream_to_file(src_path)
+    # response.stream_to_file(src_path)
 
     save_path = f'{output_dir}/output.wav'
     # Run the tone color converter
