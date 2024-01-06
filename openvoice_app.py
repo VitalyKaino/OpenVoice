@@ -32,7 +32,7 @@ en_source_style_se = torch.load(f'{en_ckpt_base}/en_style_se.pth').to(device)
 zh_source_se = torch.load(f'{zh_ckpt_base}/zh_default_se.pth').to(device)
 
 # This online demo mainly supports English and Chinese
-supported_languages = ['zh', 'en']
+supported_languages = ['zh', 'en', 'ru']
 
 def predict(prompt, style, audio_file_pth, mic_file_path, use_mic, agree):
     # initialize a empty info
@@ -63,34 +63,6 @@ def predict(prompt, style, audio_file_pth, mic_file_path, use_mic, agree):
             None,
         )
     
-    if language_predicted == "zh":
-        tts_model = zh_base_speaker_tts
-        source_se = zh_source_se
-        language = 'Chinese'
-        if style not in ['default']:
-            text_hint += f"[ERROR] The style {style} is not supported for Chinese, which should be in ['default']\n"
-            gr.Warning(f"The style {style} is not supported for Chinese, which should be in ['default']")
-            return (
-                text_hint,
-                None,
-                None,
-            )
-
-    else:
-        tts_model = en_base_speaker_tts
-        if style == 'default':
-            source_se = en_source_default_se
-        else:
-            source_se = en_source_style_se
-        language = 'English'
-        if style not in ['default', 'whispering', 'shouting', 'excited', 'cheerful', 'terrified', 'angry', 'sad', 'friendly']:
-            text_hint += f"[ERROR] The style {style} is not supported for English, which should be in ['default', 'whispering', 'shouting', 'excited', 'cheerful', 'terrified', 'angry', 'sad', 'friendly']\n"
-            gr.Warning(f"The style {style} is not supported for English, which should be in ['default', 'whispering', 'shouting', 'excited', 'cheerful', 'terrified', 'angry', 'sad', 'friendly']")
-            return (
-                text_hint,
-                None,
-                None,
-            )
 
     if use_mic == True:
         if mic_file_path is not None:
@@ -143,7 +115,13 @@ def predict(prompt, style, audio_file_pth, mic_file_path, use_mic, agree):
         )
 
     src_path = f'{output_dir}/tmp.wav'
-    tts_model.tts(prompt, src_path, speaker=style, language=language)
+    response = client.audio.speech.create(
+        model="tts-1",
+        voice="alloy",
+        input=prompt,
+    )
+
+    response.stream_to_file(src_path)
 
     save_path = f'{output_dir}/output.wav'
     # Run the tone color converter
